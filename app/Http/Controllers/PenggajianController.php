@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Penggajian;
+use App\Data;
+use App\Karyawan;
+
 
 class PenggajianController extends Controller
 {
@@ -25,7 +28,9 @@ class PenggajianController extends Controller
      */
     public function create()
     {
-        return view('karyawan.penggajian.create');
+        $karyawan = Data::all(); 
+        $utama = Karyawan::latest()->get();
+        return view('karyawan.penggajian.create',['karyawan'=>$karyawan, 'utama'=>$utama]);
     }
 
     /**
@@ -37,6 +42,13 @@ class PenggajianController extends Controller
     public function store(Request $request)
     {
         //
+        $nama= $request->input("nama");
+        $utama= $request->input("utama");
+        $lembur= $request->input("lembur");
+        $totsl= $request->input("total");
+        $tanggal= $request->input("tanggal");
+        Penggajian::create(['idkar'=>$nama,'id_jenis'=>$utama,'jam_lembur'=>$lembur,'total'=>$totsl,'tanggal'=>$tanggal]);
+        return redirect("/penggajian");
     }
 
     /**

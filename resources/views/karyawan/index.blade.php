@@ -35,6 +35,7 @@
 								@endforeach
 							</tbody>
 						</table>
+						{{ $karyawans->links() }}
 					</div>
 				</div>
 			</div>

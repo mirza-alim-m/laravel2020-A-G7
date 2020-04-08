@@ -13,15 +13,37 @@
 						<strong>Tambah Daftar Gaji</strong>
 					</div>
 					<div class="card-body">
-						<form action="{{ route('karyawans.store') }}" method="POST">
+						<form action="{{ route('penggajian.store') }}" method="POST">
 							@csrf
 							<div class="form-group">
-								<label>NAMA</label>
-								<input type="text" name="nama" placeholder="Masukan Nama" class="form-control" required>
+								<label>Nama Pegawai</label>
+								<select name="nama">
+									<option value="">Pilih karyawan</option>
+									@foreach ($karyawan as $k)
+										<option value="{{$k->idkar}}"> {{$k->nama}}</option>
+									@endforeach
+								</select>
 							</div>
 							<div class="form-group">
-								<label>GAJI KARYAWAN</label>
-								<input type="text" name="gaji" placeholder="Masukan Gaji" class="form-control" required>
+								<label>Bagian Kerja </label>
+								<select name="utama" id="">
+									<option value="">Pilih Bagaian Kerja</option>
+									@foreach ($utama as $k)
+										<option value="{{$k->id_jenis}}"> {{$k->Jabatan}} | {{$k->Gaji_Karyawan}}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="form-group">
+								<label>Jam Lembur </label>
+								<input type="text" name="lembur" required placeholder="masukan jam lembur...">
+							</div>
+							<div class="form-group">
+								<label>Total Gaji </label>
+								<input type="text" name="total" required placeholder="masukan total gaji...">
+							</div>
+							<div class="form-group">
+								<label>Tanggal </label>
+								<input type="text" name="tanggal" required placeholder="masukan tanggal (TTTT-BB-HH)">
 							</div>
 							<button type="submit" class="btn btn-success">SAVE</button>
 							<button type="reset" class="btn btn-warning">RESET</button>

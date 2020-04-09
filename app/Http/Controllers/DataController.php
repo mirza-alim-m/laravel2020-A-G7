@@ -14,7 +14,7 @@ class DataController extends Controller
     public function index()
     {
         //
-        $karyawan = Data::all(); 
+        $karyawan = Data::paginate(10); 
         return view('karyawan.data.index',['data'=>$karyawan]);
     }
 

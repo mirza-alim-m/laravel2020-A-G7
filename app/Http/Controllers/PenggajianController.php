@@ -17,7 +17,7 @@ class PenggajianController extends Controller
      */
     public function index()
     {
-        $penggajian = Penggajian::latest()->get();
+        $penggajian = Penggajian::paginate(10);
         return view('karyawan.penggajian.index', compact('penggajian'));
     }
 

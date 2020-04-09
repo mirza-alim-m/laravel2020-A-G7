@@ -41,6 +41,7 @@
 								@endforeach
 							</tbody>
 						</table>
+						{{ $penggajian->links() }}
 					</div>
 				</div>
 			</div>

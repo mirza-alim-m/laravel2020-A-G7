@@ -16,7 +16,7 @@ class PenggajianTableSeeder extends Seeder
         // $faker = Faker::create('id_ID');
 
         for($i=0;$i<100;$i++){
-            Penggajian::create(['idkar'=>$i+209,'id_jenis'=>$i,'jam_lembur'=>"3",'total'=>"5000000",'tanggal'=>"2020-12-02"]);
+            Penggajian::create(['idkar'=>$i,'id_jenis'=>$i,'jam_lembur'=>"3",'total'=>"5000000",'tanggal'=>"2020-12-02"]);
 
         }
         

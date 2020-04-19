@@ -23,4 +23,5 @@ Route::get('coba', function () {
     return view('layout.app');
 });
 Route::resource('karyawan', 'DataController');
+Route::get('karyawanajax', 'DataController@ajax');
 Route::resource('penggajian', 'PenggajianController');

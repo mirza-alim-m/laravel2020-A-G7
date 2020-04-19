@@ -30,6 +30,9 @@
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="{{asset('css/themes/all-themes.css')}}" rel="stylesheet" />
+    @section('css')
+        
+    @show
 
 </head>
 
@@ -486,17 +489,16 @@
         </aside>
         <!-- #END# Right Sidebar -->
     </section>
-
-    <section class="content">
         @yield('content')
-    </section>
 
     <!-- Jquery Core Js -->
     <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 
     <!-- Bootstrap Core Js -->
     <script src="{{asset('plugins/bootstrap/js/bootstrap.js')}}"></script>
-
+    @section('js')
+        
+    @show
     <!-- Select Plugin Js -->
     <script src="{{asset('plugins/bootstrap-select/js/bootstrap-select.js')}}"></script>
 
@@ -532,6 +534,7 @@
 
     <!-- Demo Js -->
     <script src="{{asset('js/demo.js')}}"></script>
+    
 </body>
 
 </html>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Data;
+use DataTables;
+
 class DataController extends Controller
 {
     /**
@@ -11,11 +13,39 @@ class DataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    
+    public function ajax()
+    {
+            $data = Data::latest()->get();
+            return DataTables::of($data)
+                    ->make(true);
+    }
+     public function index(Request $request)
     {
         //
-        $karyawan = Data::paginate(10); 
-        return view('karyawan.data.index',['data'=>$karyawan]);
+        // $karyawan = Data::paginate(10); 
+        // return view('karyawan.data.index',['data'=>$karyawan]);
+        if($request->ajax())
+        {
+            $data = Data::latest()->get();
+            return DataTables::of($data)
+                    ->addColumn('action', function($data){
+                        $a=csrf_field();
+                        return '
+                        <center>
+                    <form action="'.route('karyawan.destroy',$data->idkar).'" method="POST" onsubmit=\'return confirm("Aapakah Yakin Menghapus '.$data->nama .' ? ")\'>
+                    '.$a.'<input type="hidden" name="_method" value="DELETE">        
+                    <a class="btn btn-warning btn-sm" href="/karyawan/'.$data->idkar.'">Detail</a> | 
+                        <a class="btn btn-success btn-sm" href="/karyawan/'.$data->idkar.'/edit">Ubah</a> |                        
+                        <button class="btn btn-danger btn-sm" type="submit">Hapus</button>
+                        </form>
+                        </center>
+                        ';
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('karyawan.data.index');
     }
 
     /**

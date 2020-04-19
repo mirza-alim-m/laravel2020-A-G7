@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Karyawan;
+use DataTables;
+
 
 class KaryawanController extends Controller
 {
@@ -12,10 +14,31 @@ class KaryawanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $karyawans = Karyawan::paginate(10);
-        return view('karyawan.index', compact('karyawans'));
+        // $karyawans = Karyawan::paginate(10);
+        // return view('karyawan.index', compact('karyawans'));
+        if($request->ajax())
+        {
+            $data = Karyawan::latest()->get();
+            return DataTables::of($data)
+                    ->addColumn('action', function($data){
+                        $a=csrf_field();
+                        return '
+                        <center>
+                    <form action="'.route('karyawans.destroy',$data->id_jenis).'" method="POST" onsubmit=\'return confirm("Aapakah Yakin Menghapus '.$data->Jabatan .' ? ")\'>
+                    '.$a.'<input type="hidden" name="_method" value="DELETE">        
+                    <a class="btn btn-warning btn-sm" href="/karyawans/'.$data->id_jenis.'">Detail</a> | 
+                        <a class="btn btn-success btn-sm" href="/karyawans/'.$data->id_jenis.'/edit">Ubah</a> |                        
+                        <button class="btn btn-danger btn-sm" type="submit">Hapus</button>
+                        </form>
+                        </center>
+                        ';
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('karyawan.index');
     }
 
     /**

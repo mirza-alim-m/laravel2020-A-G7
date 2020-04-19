@@ -1,14 +1,13 @@
 @extends('layout.app')
 @section('content')
-
-	<div class="container" style="margin-top: 80px">
-		<div class="row">
-			<div class="col-md-8 offset-md-2">
-				<div class="card">
-					<div class="card-header">
-						<strong>Edit Daftar Gaji</strong>
-					</div>
-					<div class="card-body">
+<section class="content">
+        <div class="container-fluid">
+            <div ng-view="" class="ng-scope">
+                <div class="card ng-scope">
+                    <div class="header">
+                        <h2>Edit Kategori Gaji</h2>
+                    </div>
+                    <div class="body">
 						<form action="{{ route('karyawans.update', $karyawan->Jabatan) }}" method="POST">
 							@csrf
 							@method('PUT')
@@ -23,17 +22,9 @@
 							<button type="reset" class="btn btn-warning">RESET</button>
 						</form>
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-	<script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
-	<script>
-		CKEDITOR.replace( 'content' );
-	</script>
-</body>
-</html>
+                </div>
+            </div>
+        </div>
+    </section>
 
 @endsection

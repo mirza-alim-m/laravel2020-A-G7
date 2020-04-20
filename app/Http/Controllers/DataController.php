@@ -92,6 +92,8 @@ class DataController extends Controller
         //
         //$kar = Data::where('idkar',$id)->get();
         //return view('karyawan.data.detail',['daftar'=>$kar]);
+        $kar = Data::where('idkar',$id)->get();
+        return view('karyawan.data.detail',['daftar'=>$kar]);
     }
 
     /**

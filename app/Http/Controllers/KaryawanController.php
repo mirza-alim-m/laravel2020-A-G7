@@ -68,6 +68,16 @@ class KaryawanController extends Controller
 
     }
 
+    public function show(Karyawan $karyawan)
+    {
+        //
+        //$kar = Data::where('idkar',$id)->get();
+        //return view('karyawan.data.detail',['daftar'=>$kar]);
+        return view('karyawan.detail', compact('karyawan'));
+
+    }
+
+
     public function edit(Karyawan $karyawan)
     // ada $id
     {

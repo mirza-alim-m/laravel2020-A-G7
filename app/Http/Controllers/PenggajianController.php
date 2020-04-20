@@ -92,6 +92,8 @@ class PenggajianController extends Controller
     public function show($id)
     {
         //
+        $id = Penggajian::where('id_gaji',$id)->get();
+        return view('karyawan.penggajian.detail',['daftar'=>$id]);
     }
 
     /**

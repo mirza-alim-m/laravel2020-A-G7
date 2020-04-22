@@ -96,6 +96,7 @@ class KaryawanController extends Controller
     {
         $karyawan = Karyawan::whereJabatan($karyawan)->update([
             'Gaji_Karyawan' => $request->input('gaji_karyawan'),
+            'Jabatan' => $request->input('jabatan')
             
         ]);
 
@@ -126,8 +127,8 @@ class KaryawanController extends Controller
      */
     public function destroy($id)
     {
-        $karyawan = Karyawan::whereJabatan($id);
-        $karyawan->delete();
+        Karyawan::find($id)->delete();
+
 
         return redirect(route('karyawans.index'));
     }

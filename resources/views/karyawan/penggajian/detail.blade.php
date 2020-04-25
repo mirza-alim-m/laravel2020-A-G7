@@ -11,7 +11,7 @@
 					@foreach ($daftar as $daftar)
 						<div class="form-group">
 							<label>Nama Pegawai</label>
-							<label>{{$daftar->Penggajian_karyawan['nama']}}}}</label>
+							<label>{{$daftar->Penggajian_karyawan['nama']}}</label>
 						</div>
 						<div class="form-group">
 							<label>Bagian Kerja </label>

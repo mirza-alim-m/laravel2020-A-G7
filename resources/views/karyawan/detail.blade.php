@@ -16,6 +16,29 @@
 								<label>GAJI</label>
 								<label >{{ $karyawan->Gaji_Karyawan }}</label>
                             </div>
+                            <div class="form-group">
+								<label>Penerima Gaji</label>
+                                <table class="table table-bordered" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Nama</th>
+                                            <th scope="col">Tanggal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($karyawan->Gaji as $d)    
+                                        <tr>
+                                            <th >{{$d->Penggajian_karyawan['nama']}}</th>
+                                            <th >{{$d->tanggal}}</th>
+                                        </tr>
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
+                                
+
+                            </div>
+
 							<a href="/karyawans" class="btn btn-primary btn-sm">KEMBALI</a>
 					</div>
                 </div>

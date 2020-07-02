@@ -15,7 +15,7 @@ class GajiTableSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        for($i=0;$i<100;$i++){
+        for($i=0;$i<25;$i++){
             Karyawan::create([
                 'Jabatan'=> $faker->jobTitle,
                 'Gaji_Karyawan'=> $faker->numberBetween(500000,5000000)

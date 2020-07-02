@@ -17,6 +17,8 @@ class CreateKaryawanTable extends Migration
             $table->increments('id_jenis');
             $table->string('Jabatan');
             $table->decimal('Gaji_Karyawan',10);
+            $table->text('gambar')->nullable();
+            $table->text('pdf')->nullable();
             $table->timestamps();
         });
     }

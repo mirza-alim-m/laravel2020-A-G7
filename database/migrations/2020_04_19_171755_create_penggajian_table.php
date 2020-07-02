@@ -20,6 +20,8 @@ class CreatePenggajianTable extends Migration
             $table->decimal('jam_lembur');
             $table->decimal('total',10);
             $table->date('tanggal');
+            $table->text('gambar')->nullable();
+            $table->text('pdf')->nullable();
             $table->timestamps();
         });
     }

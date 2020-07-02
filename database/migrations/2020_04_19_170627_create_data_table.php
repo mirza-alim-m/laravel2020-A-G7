@@ -22,6 +22,8 @@ class CreateDataTable extends Migration
             $table->string('nohp',20);
             $table->text('alamat');
             $table->string('jabatan',15);
+            $table->text('gambar')->nullable();
+            $table->text('pdf')->nullable();
             $table->timestamps();
         });
     }

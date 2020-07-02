@@ -15,7 +15,7 @@ class KaryawanTableSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        for($i = 0; $i < 100; $i++){
+        for($i = 0; $i < 25; $i++){
 
             // insert data ke table pegawai menggunakan Faker
             Data::create([

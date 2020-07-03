@@ -12,7 +12,7 @@
                         <h2>Tambah Kategori Gaji</h2>
                     </div>
                     <div class="body">
-						<form action="{{ route('karyawans.store') }}" method="POST">
+						<form action="{{ route('karyawans.store') }}" method="POST"enctype="multipart/form-data">
 							@csrf
 							<div class="form-group">
 								<label>JABATAN</label>
@@ -22,6 +22,24 @@
 								<label>GAJI KARYAWAN</label>
 								<input type="text" name="gaji" placeholder="Masukan Gaji" class="form-control" required>
 							</div>
+							<div class="form-group">
+            <label>Gambar :</label>
+            <input type="file" name="gambar" class="form-control-file @error('gambar') is-invalid @enderror">
+            @error('gambar')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        <div class="form-group">
+            <label>Pdf :</label>
+            <input type="file" name="pdf" class="form-control-file @error('file') is-invalid @enderror">
+            @error('pdf')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
 							<button type="submit" class="btn btn-success">SAVE</button>
 							<button type="reset" class="btn btn-warning">RESET</button>
 						</form>

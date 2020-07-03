@@ -11,7 +11,7 @@ class Penggajian extends Model
     protected $primaryKey = 'id_gaji';
 
     protected $fillable = [
-    	'id_gaji', 'idkar', 'id_jenis', 'total', 'jam_lembur', 'tanggal'
+    	'id_gaji', 'idkar', 'id_jenis', 'total', 'jam_lembur', 'tanggal','gambar','pdf'
     ];
     public function Gaji_karyawan() {
         return $this->belongsTo(Karyawan::class, 'id_jenis');

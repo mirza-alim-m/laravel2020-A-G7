@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Karyawan;
 use DataTables;
-
+use Storage;
 
 class KaryawanController extends Controller
 {
@@ -59,10 +59,24 @@ class KaryawanController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'gambar' => 'required|image|mimes:jpeg,jpg,png,gif',
+            'file' => 'required|mimes:pdf'
+        ]);
+
+        $gambar = $request->file('gambar')->getClientOriginalName();
+        $foto = $request->file('gambar')->storeAs('karyawan/gambar',$gambar);
+
+        $file = $request->file('pdf')->getClientOriginalName();
+        $pdf = $request->file('file')->storeAs('karyawan/file',$file);
+
         $karyawan = Karyawan::create([
             'Jabatan' => $request->input('jabatan'),
             'Gaji_Karyawan' => $request->input('gaji'),
+            'gambar' => $foto,
+            'pdf' => $pdf
             ]);
+
 
             return redirect(route('karyawans.index'));
 

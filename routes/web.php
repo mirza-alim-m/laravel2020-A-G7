@@ -13,22 +13,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Auth::routes();
+
+
+
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', function () {
-        return view('layout.app');
-    });
-    
+
+	Route::get('/', function () {
+    return view('index');
+
+	});
     Route::resource('/mahasiswas', 'MahasiswaController');
     Route::resource('/karyawans', 'KaryawanController');
-    Route::get('coba', function () {
-        return view('layout.app');
-    });
     Route::resource('karyawan', 'DataController');
     Route::get('karyawanajax', 'DataController@ajax');
     Route::resource('penggajian', 'PenggajianController');
     
     
     Route::get('/home', 'HomeController@index')->name('home');
+
 });
+Route::get('/sign-in/github', 'Auth\LoginController@github');
+	Route::get('/sign-in/github/redirect', 'Auth\LoginController@githubRedirect'); 
 

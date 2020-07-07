@@ -6,6 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+use Illuminate\Http\Request;
+use Socialite;
+use Auth;
+// use Exception;
+use App\User;
+use Str;
+use Hash;
+
 class LoginController extends Controller
 {
     /*
@@ -36,5 +44,25 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function github() {
+        return Socialite::driver('github')->redirect();
+    }
+    public function githubRedirect() {
+        $user = Socialite::driver('github')->user();
+
+        // dd($user);
+
+        $user = User::firstOrCreate([
+            'email' => $user->email
+        ], [
+            'name' => $user->name,
+            'password' => Hash::make(Str::random(24))
+        ]);
+
+        Auth::login($user, true);
+
+        return redirect('/');
     }
 }

@@ -9,6 +9,12 @@
 	<div class="container-fluid">
 		<div ng-view="" class="ng-scope">
 			<div class="card ng-scope">
+				@if(Session::has('success'))
+				<div class="alert alert-primary">
+					<strong>Success: </strong>{{ Session::get('success') }}
+					<button type="button" class="close" data-dismiss="alert">×</button> 
+				</div>
+				@endif
 				<div class="header">
 					<h2>DATA KARYAWAN</h2>
 				</div>

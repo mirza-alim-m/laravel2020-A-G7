@@ -78,7 +78,7 @@ class KaryawanController extends Controller
             ]);
 
 
-            return redirect(route('karyawans.index'));
+            return redirect(route('karyawans.index'))->with('success', 'Data Karyawan Baru berhasil ditambahkan');
 
     }
 
@@ -143,7 +143,7 @@ class KaryawanController extends Controller
             
         ]);
 
-        return redirect(route('karyawans.index'));
+        return redirect(route('karyawans.index'))->with('success', 'Data Karyawan berhasil diubah');;
     }
 
     /**
@@ -174,6 +174,6 @@ class KaryawanController extends Controller
         Storage::delete($Karyawan->gambar);
         Storage::delete($Karyawan->pdf);
         Karyawan::find($id)->delete();
-        return redirect(route('karyawans.index'));
+        return redirect(route('karyawans.index'))->with('success', 'Data Karyawan berhasil dihapus');
     }
 }

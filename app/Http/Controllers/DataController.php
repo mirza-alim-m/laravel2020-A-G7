@@ -93,7 +93,9 @@ class DataController extends Controller
         Data::create(['nama'=>$nama,'jk'=>$jk,'tl'=>$tl,'nohp'=>$nohp,'alamat'=>$alamat,'no_rek'=>$no_rek,'jabatan'=>$jabatan,
         'gambar' => $foto,
         'pdf' => $pdf]);
-        return redirect("/karyawan");
+        return redirect("/karyawan")->with('success', 'Data Jenis Gaji baru berhasil ditambahkan');
+
+        ;
     }
 
     /**
@@ -168,7 +170,7 @@ class DataController extends Controller
         Data::where('idkar',$id)->update(['nama'=>$nama,'jk'=>$jk,'tl'=>$tl,'nohp'=>$nohp,'alamat'=>$alamat,'no_rek'=>$no_rek,'jabatan'=>$jabatan,
         'gambar' => $foto,
         'pdf' => $pdf]);
-        return redirect("/karyawan");
+        return redirect("/karyawan")->with('success', 'Data Jenis Gaji berhasil diubah');
     }
 
     /**
@@ -185,6 +187,6 @@ class DataController extends Controller
         Storage::delete($Karyawan->pdf);
         Data::find($id)->delete();
 
-        return redirect('/karyawan');
+        return redirect('/karyawan')->with('success', 'Data Jenis Gaji berhasil dihapus');
     }
 }

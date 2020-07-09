@@ -13,7 +13,7 @@
                         <h2>Tambah Daftar Gaji</h2>
                     </div>
                     <div class="body">
-						<form action="{{ route('penggajian.store') }}" method="POST">
+						<form action="{{ route('penggajian.store') }}" method="POST"enctype="multipart/form-data">
 							@csrf
 							<div class="form-group">
 								<label>Nama Pegawai</label>
@@ -45,6 +45,25 @@
 								<label>Tanggal </label>
 								<input type="text" name="tanggal" required placeholder="masukan tanggal (TTTT-BB-HH)">
 							</div>
+							<div class="form-group">
+								<label>Gambar :</label>
+								<input type="file" name="gambar" class="form-control-file @error('gambar') is-invalid @enderror">
+								@error('gambar')
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $message }}</strong>
+									</span>
+								@enderror
+							</div>
+							<div class="form-group">
+								<label>Pdf :</label>
+								<input type="file" name="pdf" class="form-control-file @error('pdf') is-invalid @enderror">
+								@error('pdf')
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $message }}</strong>
+									</span>
+								@enderror
+							</div>
+
 							<button type="submit" class="btn btn-success">SAVE</button>
 							<button type="reset" class="btn btn-warning">RESET</button>
 						</form>

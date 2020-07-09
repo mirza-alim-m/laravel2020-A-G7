@@ -29,6 +29,18 @@
 							<label>Tanggal </label>
 							<label >{{$daftar->tanggal}}</label>
 						</div>
+						<label>Gambar: </label>
+						<br>
+						<img width="25%" src="{{asset('/storage/'.$daftar->gambar)}}"></center>
+						<br>
+						<label>PDF: </label>    
+						@if($daftar->pdf)
+								<a href="{{ asset('/storage/' . $daftar->pdf) }}" target="_blank">Download PDF</a>
+							@else
+								<a>Pdf Not Found</a>
+							@endif
+
+<br>
 						<a href="/penggajian" class="btn btn-primary btn-sm">KEMBALI</a>
 					@endforeach
 					

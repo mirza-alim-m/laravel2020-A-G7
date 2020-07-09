@@ -9,7 +9,7 @@
 				</div>
 				<div class="body">
 					@foreach ($daftar as $daftar)
-					<form action="/penggajian/{{$daftar->id_gaji}}" method="POST">
+					<form action="/penggajian/{{$daftar->id_gaji}}" method="POST"enctype="multipart/form-data">
 						{{ csrf_field() }}
 						@method('PUT')
 						<div class="form-group">
@@ -50,6 +50,34 @@
 							<label>Tanggal </label>
 							<input type="text" name="tanggal" required placeholder="masukan tanggal (TTTT-BB-HH)" value="{{$daftar->tanggal}}">
 						</div>
+						<div class="form-group">
+							<label>Gambar :</label></br>
+							<img width="25%" src="{{asset('/storage/'.$daftar->gambar)}}"><br><br>
+							<input type="file" name="gambar" class="form-control-file @error('gambar') is-invalid @enderror">
+							@error('gambar')
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+							@enderror
+						</div>
+						<div class="form-group">
+							<label>PDF
+								@if($daftar->pdf)
+								<a href="{{ asset('/storage/' . $daftar->pdf) }}" target="_blank">Download PDF</a>
+							@else
+								<a>Pdf Not Found</a>
+							@endif
+								:</label></br>
+							<input type="file" name="file" class="form-control-file @error('file') is-invalid @enderror">
+							@error('file')
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+							@enderror
+							<input type="hidden" name="gambarlama" value="{{ $daftar->gambar }}">
+							<input type="hidden" name="pdflama" value="{{ $daftar->pdf }}">
+						</div>
+
 						<button type="submit" class="btn btn-success">SAVE</button>
 						<button type="reset" class="btn btn-warning">RESET</button>
 					</form>

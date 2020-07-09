@@ -7,7 +7,7 @@ use App\Penggajian;
 use App\Data;
 use App\Karyawan;
 use DataTables;
-
+use Storage;
 
 class PenggajianController extends Controller
 {
@@ -74,13 +74,27 @@ class PenggajianController extends Controller
     public function store(Request $request)
     {
         //
+        $validatedData = $request->validate([
+            'gambar' => 'required|image|mimes:jpeg,jpg,png,gif',
+            'pdf' => 'required|mimes:pdf'
+        ]);
+
+        $gambar = $request->file('gambar')->getClientOriginalName();
+        $foto = $request->file('gambar')->storeAs('penggajian/gambar',$gambar);
+
+        $file = $request->file('pdf')->getClientOriginalName();
+        $pdf = $request->file('pdf')->storeAs('penggajian/file',$file);
+
+
         $nama= $request->input("nama");
         $utama= $request->input("utama");
         $lembur= $request->input("lembur");
         $totsl= $request->input("total");
         $tanggal= $request->input("tanggal");
-        Penggajian::create(['idkar'=>$nama,'id_jenis'=>$utama,'jam_lembur'=>$lembur,'total'=>$totsl,'tanggal'=>$tanggal]);
-        return redirect("/penggajian");
+        Penggajian::create(['idkar'=>$nama,'id_jenis'=>$utama,'jam_lembur'=>$lembur,'total'=>$totsl,'tanggal'=>$tanggal,
+        'gambar' => $foto,
+        'pdf' => $pdf]);
+        return redirect("/penggajian")->with('success', 'Data Penggajian Baru berhasil ditambahkan');
     }
 
     /**
@@ -120,13 +134,40 @@ class PenggajianController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $validatedData = $request->validate([
+            'gambar' => 'image|mimes:jpeg,jpg,png,gif',
+            'file' => 'mimes:pdf'
+        ]);
+
+        $fotolama =$request->gambarlama;
+        $pdflama =$request->pdflama;
+        $foto=$fotolama;
+        $pdf=$pdflama;
+        //cek ada update gambar atu tidak
+        if ($request->gambar) {
+            //hapus fto lama
+            Storage::delete($fotolama);
+            //simpan gambar baruige:
+            $gambar = $request->file('gambar')->getClientOriginalName();
+            $foto = $request->file('gambar')->storeAs('penggajian/gambar',$gambar);
+         }
+         if ($request->file) {
+            //hapus fto lama
+            Storage::delete($pdflama);
+            //simpan gambar baruige:
+            $file = $request->file('file')->getClientOriginalName();
+            $pdf = $request->file('file')->storeAs('penggajian/file',$file);
+         }
         $nama= $request->input("nama");
         $utama= $request->input("utama");
         $lembur= $request->input("lembur");
         $totsl= $request->input("total");
         $tanggal= $request->input("tanggal");
-        Penggajian::where('id_gaji',$id)->update(['idkar'=>$nama,'id_jenis'=>$utama,'jam_lembur'=>$lembur,'total'=>$totsl,'tanggal'=>$tanggal]);
-        return redirect("/penggajian");
+        Penggajian::where('id_gaji',$id)->update(['idkar'=>$nama,'id_jenis'=>$utama,'jam_lembur'=>$lembur,'total'=>$totsl,'tanggal'=>$tanggal,
+        'gambar' => $foto,
+        'pdf' => $pdf
+        ]);
+        return redirect("/penggajian")->with('success', 'Data Penggajian berhasil diubah');
     }
 
     /**
@@ -137,8 +178,11 @@ class PenggajianController extends Controller
      */
     public function destroy($id)
     {
+        $Karyawan = Penggajian::findOrfail($id);
+        Storage::delete($Karyawan->gambar);
+        Storage::delete($Karyawan->pdf);
         Penggajian::find($id)->delete();
 
-        return redirect('/penggajian');
+        return redirect('/penggajian')->with('success', 'Data Penggajian berhasil dihapus');;
     }
 }

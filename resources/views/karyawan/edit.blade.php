@@ -8,7 +8,7 @@
                         <h2>Edit Kategori Gaji</h2>
                     </div>
                     <div class="body">
-						<form action="{{ route('karyawans.update', $karyawan->Jabatan) }}" method="POST" enctype="multipart/form-data">
+						<form action="{{ route('karyawans.update', $karyawan->Jabatan) }}" method="POST" >
 							@csrf
 							@method('PUT')
 							<div class="form-group">

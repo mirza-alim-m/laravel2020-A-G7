@@ -16,6 +16,16 @@
 								<label>GAJI</label>
 								<label >{{ $karyawan->Gaji_Karyawan }}</label>
                             </div>
+                            <label>Gambar: </label>
+                            <br>
+                            <img width="25%" src="{{asset('/storage/'.$karyawan->gambar)}}"></center>
+                            <br>
+                            <label>PDF: </label>    
+                            @if($karyawan->pdf)
+                                    <a href="{{ asset('/storage/' . $karyawan->pdf) }}" target="_blank">Download PDF</a>
+                                @else
+                                    <a>Pdf Not Found</a>
+                                @endif
                             <div class="form-group">
 								<label>Penerima Gaji</label>
                                 <table class="table table-bordered" id="myTable">

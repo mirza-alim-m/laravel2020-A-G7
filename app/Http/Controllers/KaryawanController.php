@@ -61,14 +61,14 @@ class KaryawanController extends Controller
     {
         $validatedData = $request->validate([
             'gambar' => 'required|image|mimes:jpeg,jpg,png,gif',
-            'file' => 'required|mimes:pdf'
+            'pdf' => 'required|mimes:pdf'
         ]);
 
         $gambar = $request->file('gambar')->getClientOriginalName();
         $foto = $request->file('gambar')->storeAs('karyawan/gambar',$gambar);
 
         $file = $request->file('pdf')->getClientOriginalName();
-        $pdf = $request->file('file')->storeAs('karyawan/file',$file);
+        $pdf = $request->file('pdf')->storeAs('karyawan/file',$file);
 
         $karyawan = Karyawan::create([
             'Jabatan' => $request->input('jabatan'),
@@ -105,12 +105,41 @@ class KaryawanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $karyawan)
+    public function update(Request $request, $id)
     // ada $id
     {
-        $karyawan = Karyawan::whereJabatan($karyawan)->update([
+        $validatedData = $request->validate([
+            'gambar' => 'image|mimes:jpeg,jpg,png,gif',
+            'file' => 'mimes:pdf'
+        ]);
+
+        $fotolama =$request->gambarlama;
+        $pdflama =$request->pdflama;
+        $foto=$fotolama;
+        $pdf=$pdflama;
+        //cek ada update gambar atu tidak
+        if ($request->gambar) {
+            //hapus fto lama
+            Storage::delete($fotolama);
+            //simpan gambar baruige:
+            $gambar = $request->file('gambar')->getClientOriginalName();
+            $foto = $request->file('gambar')->storeAs('karyawan/gambar',$gambar);
+         }
+         if ($request->file) {
+            //hapus fto lama
+            Storage::delete($pdflama);
+            //simpan gambar baruige:
+            $file = $request->file('file')->getClientOriginalName();
+            $pdf = $request->file('file')->storeAs('karyawan/file',$file);
+         }
+
+        $karyawan = Karyawan::whereJabatan($id)->update([
             'Gaji_Karyawan' => $request->input('gaji_karyawan'),
             'Jabatan' => $request->input('jabatan')
+            ,
+            'gambar' => $foto,
+            'pdf' => $pdf
+            
             
         ]);
 
@@ -141,9 +170,10 @@ class KaryawanController extends Controller
      */
     public function destroy($id)
     {
+        $Karyawan = Karyawan::findOrfail($id);
+        Storage::delete($Karyawan->gambar);
+        Storage::delete($Karyawan->pdf);
         Karyawan::find($id)->delete();
-
-
         return redirect(route('karyawans.index'));
     }
 }

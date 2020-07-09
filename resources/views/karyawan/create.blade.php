@@ -33,7 +33,7 @@
         </div>
         <div class="form-group">
             <label>Pdf :</label>
-            <input type="file" name="pdf" class="form-control-file @error('file') is-invalid @enderror">
+            <input type="file" name="pdf" class="form-control-file @error('pdf') is-invalid @enderror">
             @error('pdf')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

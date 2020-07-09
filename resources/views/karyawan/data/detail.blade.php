@@ -24,6 +24,17 @@
 						<label >{{$k->alamat}}</label><br>
 						<label>Nomor Rekening</label>
 						<label >{{$k->no_rek}}</label><br>
+						<label>Gambar: </label>
+						<br>
+						<img width="25%" src="{{asset('/storage/'.$k->gambar)}}"></center>
+						<br>
+						<label>PDF: </label>    
+						@if($k->pdf)
+								<a href="{{ asset('/storage/' . $k->pdf) }}" target="_blank">Download PDF</a>
+							@else
+								<a>Pdf Not Found</a>
+							@endif
+
 						@endforeach
 					<br>
 					<a href="/karyawan" class="btn btn-primary btn-sm">KEMBALI</a>

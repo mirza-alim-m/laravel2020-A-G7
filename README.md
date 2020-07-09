@@ -16,4 +16,7 @@
     Jalankan Perintah php artisan key:genarate;
     Jalankan Perintah composer dump-auto;
     Jalankan Perintah php artisan migrate --seed;
+    tambahkan "FILESYSTEM_DRIVER=punlic" pada file .enf;
+    jalankan perintah php artisan config:cache;
+    jalankan perintah php artisan storage:link;
 

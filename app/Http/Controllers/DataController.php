@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Data;
 use DataTables;
+use Storage;
+
 
 class DataController extends Controller
 {
@@ -69,6 +71,17 @@ class DataController extends Controller
     public function store(Request $request)
     {
         //
+        $validatedData = $request->validate([
+            'gambar' => 'required|image|mimes:jpeg,jpg,png,gif',
+            'pdf' => 'required|mimes:pdf'
+        ]);
+
+        $gambar = $request->file('gambar')->getClientOriginalName();
+        $foto = $request->file('gambar')->storeAs('data/gambar',$gambar);
+
+        $file = $request->file('pdf')->getClientOriginalName();
+        $pdf = $request->file('pdf')->storeAs('data/file',$file);
+
         
         $nama= $request->input("nama");
         $jk= $request->input("jk");
@@ -77,7 +90,9 @@ class DataController extends Controller
         $alamat= $request->input("alamat");
         $no_rek= $request->input("no_rek");
         $jabatan= $request->input("jabatan");
-        Data::create(['nama'=>$nama,'jk'=>$jk,'tl'=>$tl,'nohp'=>$nohp,'alamat'=>$alamat,'no_rek'=>$no_rek,'jabatan'=>$jabatan]);
+        Data::create(['nama'=>$nama,'jk'=>$jk,'tl'=>$tl,'nohp'=>$nohp,'alamat'=>$alamat,'no_rek'=>$no_rek,'jabatan'=>$jabatan,
+        'gambar' => $foto,
+        'pdf' => $pdf]);
         return redirect("/karyawan");
     }
 
@@ -119,6 +134,30 @@ class DataController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $validatedData = $request->validate([
+            'gambar' => 'image|mimes:jpeg,jpg,png,gif',
+            'file' => 'mimes:pdf'
+        ]);
+        $fotolama =$request->gambarlama;
+        $pdflama =$request->pdflama;
+        $foto=$fotolama;
+        $pdf=$pdflama;
+        if ($request->gambar) {
+            //hapus fto lama
+            Storage::delete($fotolama);
+            //simpan gambar baruige:
+            $gambar = $request->file('gambar')->getClientOriginalName();
+            $foto = $request->file('gambar')->storeAs('data/gambar',$gambar);
+         }
+         if ($request->file) {
+            //hapus fto lama
+            Storage::delete($pdflama);
+            //simpan gambar baruige:
+            $file = $request->file('file')->getClientOriginalName();
+            $pdf = $request->file('file')->storeAs('data/file',$file);
+         }
+
+        
         $nama= $request->input("nama");
         $jk= $request->input("jk");
         $tl= $request->input("tl");
@@ -126,7 +165,9 @@ class DataController extends Controller
         $alamat= $request->input("alamat");
         $no_rek= $request->input("no_rek");
         $jabatan= $request->input("jabatan");
-        Data::where('idkar',$id)->update(['nama'=>$nama,'jk'=>$jk,'tl'=>$tl,'nohp'=>$nohp,'alamat'=>$alamat,'no_rek'=>$no_rek,'jabatan'=>$jabatan]);
+        Data::where('idkar',$id)->update(['nama'=>$nama,'jk'=>$jk,'tl'=>$tl,'nohp'=>$nohp,'alamat'=>$alamat,'no_rek'=>$no_rek,'jabatan'=>$jabatan,
+        'gambar' => $foto,
+        'pdf' => $pdf]);
         return redirect("/karyawan");
     }
 
@@ -139,6 +180,9 @@ class DataController extends Controller
     public function destroy($id)
     {
         
+        $Karyawan = Data::findOrfail($id);
+        Storage::delete($Karyawan->gambar);
+        Storage::delete($Karyawan->pdf);
         Data::find($id)->delete();
 
         return redirect('/karyawan');
